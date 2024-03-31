@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.9.34622.214
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "3DES", "3DES.csproj", "{12A0B7A5-2011-42B9-8E10-72EE9E8BE895}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{12A0B7A5-2011-42B9-8E10-72EE9E8BE895}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{12A0B7A5-2011-42B9-8E10-72EE9E8BE895}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{12A0B7A5-2011-42B9-8E10-72EE9E8BE895}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{12A0B7A5-2011-42B9-8E10-72EE9E8BE895}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {A803A298-8B41-43C4-AA95-4D46B42B6235}
+	EndGlobalSection
+EndGlobal
