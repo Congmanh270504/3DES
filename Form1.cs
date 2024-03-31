@@ -21,15 +21,10 @@ namespace _3DES
             InitializeComponent();
         }
 
-        private void button1_Click(object sender, EventArgs e)
-        {
-            //TripleDES.
-            Output.Text = EncryptText(Input.Text);
-        }
         private string EncryptText(string plaintext)
         {
             // Get Key and IV from Base64 string
-            byte[] key = Convert.FromBase64String(Key1.Text);
+            byte[] key = Convert.FromBase64String(yourKey.Text);
 
             // Create tdes object
             tdes = TripleDES.Create();
@@ -53,7 +48,7 @@ namespace _3DES
         private string DecryptText(string plaintext)
         {
             // Get Key and IV from Base64 string
-            byte[] key = Convert.FromBase64String(Key1.Text);
+            byte[] key = Convert.FromBase64String(yourKey.Text);
 
             // Create tdes object
             tdes = TripleDES.Create();
@@ -77,7 +72,7 @@ namespace _3DES
         {
             tdes = TripleDES.Create();
             tdes.GenerateKey();
-            Key1.Text = Convert.ToBase64String(tdes.Key);
+            yourKey.Text = Convert.ToBase64String(tdes.Key);
         }
 
    
@@ -106,7 +101,41 @@ namespace _3DES
             }
         }
 
-        private void label16_Click(object sender, EventArgs e)
+        private void Encrypt_Click(object sender, EventArgs e)
+        {
+            Encrypt.ForeColor= Color.Blue;
+            resultEncrypt.Text = EncryptText(inputEncrypt.Text);
+
+        }
+
+        private void Decrypt_Click(object sender, EventArgs e)
+        {
+            Decrypt.ForeColor = Color.Blue;
+            resultDecrypt.Text= DecryptText(inputDecrypt.Text);
+
+        }
+
+        private void Key1_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void radioButton2_CheckedChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void textBox4_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void resultEncrypt_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void Output_TextChanged(object sender, EventArgs e)
         {
 
         }
