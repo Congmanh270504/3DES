@@ -47,7 +47,7 @@
             // 
             // inputEncrypt
             // 
-            this.inputEncrypt.Location = new System.Drawing.Point(151, 99);
+            this.inputEncrypt.Location = new System.Drawing.Point(151, 89);
             this.inputEncrypt.Margin = new System.Windows.Forms.Padding(4);
             this.inputEncrypt.Name = "inputEncrypt";
             this.inputEncrypt.Size = new System.Drawing.Size(182, 23);
@@ -71,9 +71,9 @@
             this.label1.Location = new System.Drawing.Point(148, 25);
             this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(192, 17);
+            this.label1.Size = new System.Drawing.Size(147, 17);
             this.label1.TabIndex = 5;
-            this.label1.Text = "Triple DES Online Encryption";
+            this.label1.Text = "Triple DES Encryption";
             // 
             // label2
             // 
@@ -81,9 +81,9 @@
             this.label2.Location = new System.Drawing.Point(503, 25);
             this.label2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(193, 17);
+            this.label2.Size = new System.Drawing.Size(148, 17);
             this.label2.TabIndex = 6;
-            this.label2.Text = "Triple DES Online Decryption";
+            this.label2.Text = "Triple DES Decryption";
             // 
             // label3
             // 
@@ -116,7 +116,7 @@
             // label9
             // 
             this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(148, 190);
+            this.label9.Location = new System.Drawing.Point(148, 180);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(195, 17);
             this.label9.TabIndex = 18;
@@ -124,14 +124,14 @@
             // 
             // resultEncrypt
             // 
-            this.resultEncrypt.Location = new System.Drawing.Point(151, 227);
+            this.resultEncrypt.Location = new System.Drawing.Point(151, 217);
             this.resultEncrypt.Name = "resultEncrypt";
             this.resultEncrypt.Size = new System.Drawing.Size(182, 23);
             this.resultEncrypt.TabIndex = 19;
             // 
             // inputDecrypt
             // 
-            this.inputDecrypt.Location = new System.Drawing.Point(506, 99);
+            this.inputDecrypt.Location = new System.Drawing.Point(506, 89);
             this.inputDecrypt.Name = "inputDecrypt";
             this.inputDecrypt.Size = new System.Drawing.Size(202, 23);
             this.inputDecrypt.TabIndex = 20;
@@ -140,15 +140,15 @@
             // label14
             // 
             this.label14.AutoSize = true;
-            this.label14.Location = new System.Drawing.Point(508, 192);
+            this.label14.Location = new System.Drawing.Point(508, 182);
             this.label14.Name = "label14";
-            this.label14.Size = new System.Drawing.Size(258, 17);
+            this.label14.Size = new System.Drawing.Size(200, 17);
             this.label14.TabIndex = 28;
-            this.label14.Text = "Triple DES Decrypted Output (Base64):";
+            this.label14.Text = "Triple DES Decrypted Output :";
             // 
             // resultDecrypt
             // 
-            this.resultDecrypt.Location = new System.Drawing.Point(506, 229);
+            this.resultDecrypt.Location = new System.Drawing.Point(506, 219);
             this.resultDecrypt.Name = "resultDecrypt";
             this.resultDecrypt.Size = new System.Drawing.Size(201, 23);
             this.resultDecrypt.TabIndex = 29;
@@ -165,7 +165,7 @@
             // getEncrypt
             // 
             this.getEncrypt.BackColor = System.Drawing.SystemColors.ActiveCaption;
-            this.getEncrypt.Location = new System.Drawing.Point(151, 140);
+            this.getEncrypt.Location = new System.Drawing.Point(151, 130);
             this.getEncrypt.Name = "getEncrypt";
             this.getEncrypt.Size = new System.Drawing.Size(79, 34);
             this.getEncrypt.TabIndex = 32;
@@ -176,7 +176,7 @@
             // getDecrypt
             // 
             this.getDecrypt.BackColor = System.Drawing.SystemColors.ActiveCaption;
-            this.getDecrypt.Location = new System.Drawing.Point(506, 139);
+            this.getDecrypt.Location = new System.Drawing.Point(506, 129);
             this.getDecrypt.Name = "getDecrypt";
             this.getDecrypt.Size = new System.Drawing.Size(90, 37);
             this.getDecrypt.TabIndex = 33;
