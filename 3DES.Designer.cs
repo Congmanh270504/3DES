@@ -135,7 +135,6 @@
             this.inputDecrypt.Name = "inputDecrypt";
             this.inputDecrypt.Size = new System.Drawing.Size(202, 23);
             this.inputDecrypt.TabIndex = 20;
-            this.inputDecrypt.TextChanged += new System.EventHandler(this.inputDecrypt_TextChanged);
             // 
             // label14
             // 

@@ -16,6 +16,7 @@ namespace _3DES
     public partial class Form1 : Form
     {
         SymmetricAlgorithm tdes;
+        int _blocksize = 64, _keysize = 168;
         public Form1()
         {
             InitializeComponent();
@@ -23,17 +24,8 @@ namespace _3DES
 
         public string Encrypt(string source, string key)
         {
-            using (TripleDESCryptoServiceProvider tripleDESCryptoService = new TripleDESCryptoServiceProvider())
-            {
-                using (MD5CryptoServiceProvider hashMD5Provider = new MD5CryptoServiceProvider())
-                {
-                    byte[] byteHash = hashMD5Provider.ComputeHash(Encoding.UTF8.GetBytes(key));
-                    tripleDESCryptoService.Key = byteHash;
-                    tripleDESCryptoService.Mode = CipherMode.ECB;//CBC, CFB
-                    byte[] data = Encoding.Unicode.GetBytes(source);
-                    return Convert.ToBase64String(tripleDESCryptoService.CreateEncryptor().TransformFinalBlock(data, 0, data.Length));
-                }
-            }
+            engine
+            return null;
         }
         public static string Decrypt(string encrypt, string key)
         {
@@ -52,10 +44,11 @@ namespace _3DES
         private void getKey_Click(object sender, EventArgs e)
         {
             tdes = TripleDES.Create();
-            tdes.KeySize = 128;
-            tdes.BlockSize = 64;
+            tdes.KeySize = _keysize;
+            tdes.BlockSize = _blocksize;
             tdes.GenerateKey();
             yourKey.Text = Convert.ToBase64String(tdes.Key);
+            
         }
 
 
@@ -99,8 +92,6 @@ namespace _3DES
 
         }
 
-        private void inputDecrypt_TextChanged(object sender, EventArgs e)
-        {
-        }
+        
     }
 }
