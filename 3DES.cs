@@ -16,7 +16,7 @@ namespace _3DES
     public partial class Form1 : Form
     {
         SymmetricAlgorithm tdes;
-        int _blocksize = 64, _keysize = 168;
+        int _blocksize = 64, _keysize = 192;
         public Form1()
         {
             InitializeComponent();
@@ -24,8 +24,17 @@ namespace _3DES
 
         public string Encrypt(string source, string key)
         {
-            engine
-            return null;
+            using (TripleDESCryptoServiceProvider tripleDESCryptoService = new TripleDESCryptoServiceProvider())
+            {
+                using (MD5CryptoServiceProvider hashMD5Provider = new MD5CryptoServiceProvider())
+                {
+                    byte[] byteHash = hashMD5Provider.ComputeHash(Encoding.UTF8.GetBytes(key));
+                    tripleDESCryptoService.Key = byteHash;
+                    tripleDESCryptoService.Mode = CipherMode.ECB;
+                    byte[] data = Encoding.Unicode.GetBytes(source);
+                    return Convert.ToBase64String(tripleDESCryptoService.CreateEncryptor().TransformFinalBlock(data, 0, data.Length));
+                }
+            }
         }
         public static string Decrypt(string encrypt, string key)
         {
@@ -48,7 +57,21 @@ namespace _3DES
             tdes.BlockSize = _blocksize;
             tdes.GenerateKey();
             yourKey.Text = Convert.ToBase64String(tdes.Key);
-            
+            byte[] key1 = new byte[8];
+            byte[] key2 = new byte[8];
+            byte[] key3 = new byte[8];
+            Buffer.BlockCopy(tdes.Key, 0, key1, 0, 8);
+            textBox1.Text = Convert.ToBase64String(key1);
+            Buffer.BlockCopy(tdes.Key, 8, key2, 0, 8);
+            textBox2.Text = Convert.ToBase64String(key2);
+            Buffer.BlockCopy(tdes.Key, 16, key3, 0, 8);
+            textBox3.Text = Convert.ToBase64String(key3);
+
+            byte[] key192bit = new byte[24];
+            Buffer.BlockCopy(key1, 0, key192bit, 0, 8);
+            Buffer.BlockCopy(key2, 0, key192bit, 8, 8);
+            Buffer.BlockCopy(key3, 0, key192bit, 16, 8);
+            textBox4.Text = Convert.ToBase64String(key192bit);
         }
 
 
@@ -85,6 +108,15 @@ namespace _3DES
 
         }
 
+        private void Refresh_Click(object sender, EventArgs e)
+        {
+            yourKey.Text = "";
+            inputEncrypt.Text = "";
+            resultEncrypt.Text = "";
+            inputDecrypt.Text = "";
+            resultDecrypt.Text = "";
+        }
+
         private void Decrypt_Click(object sender, EventArgs e)
         {
             //Decrypt().ForeColor = Color.Blue;
@@ -92,6 +124,6 @@ namespace _3DES
 
         }
 
-        
+
     }
 }

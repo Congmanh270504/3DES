@@ -43,6 +43,11 @@
             this.label16 = new System.Windows.Forms.Label();
             this.getEncrypt = new System.Windows.Forms.Button();
             this.getDecrypt = new System.Windows.Forms.Button();
+            this.Refresh = new System.Windows.Forms.Button();
+            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.textBox2 = new System.Windows.Forms.TextBox();
+            this.textBox3 = new System.Windows.Forms.TextBox();
+            this.textBox4 = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
             // inputEncrypt
@@ -183,11 +188,55 @@
             this.getDecrypt.UseVisualStyleBackColor = false;
             this.getDecrypt.Click += new System.EventHandler(this.Decrypt_Click);
             // 
+            // Refresh
+            // 
+            this.Refresh.BackColor = System.Drawing.SystemColors.ActiveCaption;
+            this.Refresh.Location = new System.Drawing.Point(964, 203);
+            this.Refresh.Name = "Refresh";
+            this.Refresh.Size = new System.Drawing.Size(90, 37);
+            this.Refresh.TabIndex = 35;
+            this.Refresh.Text = "Refresh";
+            this.Refresh.UseVisualStyleBackColor = false;
+            this.Refresh.Click += new System.EventHandler(this.Refresh_Click);
+            // 
+            // textBox1
+            // 
+            this.textBox1.Location = new System.Drawing.Point(151, 284);
+            this.textBox1.Name = "textBox1";
+            this.textBox1.Size = new System.Drawing.Size(182, 23);
+            this.textBox1.TabIndex = 36;
+            // 
+            // textBox2
+            // 
+            this.textBox2.Location = new System.Drawing.Point(414, 284);
+            this.textBox2.Name = "textBox2";
+            this.textBox2.Size = new System.Drawing.Size(182, 23);
+            this.textBox2.TabIndex = 37;
+            // 
+            // textBox3
+            // 
+            this.textBox3.Location = new System.Drawing.Point(667, 284);
+            this.textBox3.Name = "textBox3";
+            this.textBox3.Size = new System.Drawing.Size(182, 23);
+            this.textBox3.TabIndex = 38;
+            // 
+            // textBox4
+            // 
+            this.textBox4.Location = new System.Drawing.Point(414, 328);
+            this.textBox4.Name = "textBox4";
+            this.textBox4.Size = new System.Drawing.Size(182, 23);
+            this.textBox4.TabIndex = 39;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1067, 554);
+            this.Controls.Add(this.textBox4);
+            this.Controls.Add(this.textBox3);
+            this.Controls.Add(this.textBox2);
+            this.Controls.Add(this.textBox1);
+            this.Controls.Add(this.Refresh);
             this.Controls.Add(this.getDecrypt);
             this.Controls.Add(this.getEncrypt);
             this.Controls.Add(this.label16);
@@ -228,6 +277,11 @@
         private System.Windows.Forms.Label label16;
         private System.Windows.Forms.Button getEncrypt;
         private System.Windows.Forms.Button getDecrypt;
+        private System.Windows.Forms.Button Refresh;
+        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.TextBox textBox2;
+        private System.Windows.Forms.TextBox textBox3;
+        private System.Windows.Forms.TextBox textBox4;
     }
 }
 
