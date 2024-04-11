@@ -21,7 +21,14 @@ namespace _3DES
         {
             InitializeComponent();
         }
+        private static Random random = new Random();
 
+        public static string RandomString(int length)
+        {
+            const string chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+            return new string(Enumerable.Repeat(chars, length)
+                .Select(s => s[random.Next(s.Length)]).ToArray());
+        }
         public string Encrypt(string source, string key)
         {
             using (TripleDESCryptoServiceProvider tripleDESCryptoService = new TripleDESCryptoServiceProvider())
@@ -56,7 +63,7 @@ namespace _3DES
             tdes.KeySize = _keysize;
             tdes.BlockSize = _blocksize;
             tdes.GenerateKey();
-            yourKey.Text = Convert.ToBase64String(tdes.Key);
+            yourKey.Text = Encoding.ASCII.GetString(tdes.Key);
             byte[] key1 = new byte[8];
             byte[] key2 = new byte[8];
             byte[] key3 = new byte[8];
