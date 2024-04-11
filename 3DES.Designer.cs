@@ -1,6 +1,6 @@
 ﻿namespace _3DES
 {
-    partial class Form1
+    partial class tripdes
     {
         /// <summary>
         /// Required designer variable.
@@ -44,10 +44,13 @@
             this.getEncrypt = new System.Windows.Forms.Button();
             this.getDecrypt = new System.Windows.Forms.Button();
             this.Refresh = new System.Windows.Forms.Button();
-            this.textBox1 = new System.Windows.Forms.TextBox();
-            this.textBox2 = new System.Windows.Forms.TextBox();
-            this.textBox3 = new System.Windows.Forms.TextBox();
-            this.textBox4 = new System.Windows.Forms.TextBox();
+            this.subKey1 = new System.Windows.Forms.TextBox();
+            this.subKey2 = new System.Windows.Forms.TextBox();
+            this.subKey3 = new System.Windows.Forms.TextBox();
+            this.radioButton1 = new System.Windows.Forms.RadioButton();
+            this.radioButton2 = new System.Windows.Forms.RadioButton();
+            this.radioButton3 = new System.Windows.Forms.RadioButton();
+            this.label6 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // inputEncrypt
@@ -191,7 +194,7 @@
             // Refresh
             // 
             this.Refresh.BackColor = System.Drawing.SystemColors.ActiveCaption;
-            this.Refresh.Location = new System.Drawing.Point(964, 203);
+            this.Refresh.Location = new System.Drawing.Point(964, 505);
             this.Refresh.Name = "Refresh";
             this.Refresh.Size = new System.Drawing.Size(90, 37);
             this.Refresh.TabIndex = 35;
@@ -199,43 +202,86 @@
             this.Refresh.UseVisualStyleBackColor = false;
             this.Refresh.Click += new System.EventHandler(this.Refresh_Click);
             // 
-            // textBox1
+            // subKey1
             // 
-            this.textBox1.Location = new System.Drawing.Point(151, 284);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(182, 23);
-            this.textBox1.TabIndex = 36;
+            this.subKey1.Location = new System.Drawing.Point(151, 328);
+            this.subKey1.Name = "subKey1";
+            this.subKey1.Size = new System.Drawing.Size(182, 23);
+            this.subKey1.TabIndex = 36;
             // 
-            // textBox2
+            // subKey2
             // 
-            this.textBox2.Location = new System.Drawing.Point(414, 284);
-            this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(182, 23);
-            this.textBox2.TabIndex = 37;
+            this.subKey2.Location = new System.Drawing.Point(414, 328);
+            this.subKey2.Name = "subKey2";
+            this.subKey2.Size = new System.Drawing.Size(182, 23);
+            this.subKey2.TabIndex = 37;
+            this.subKey2.TextChanged += new System.EventHandler(this.subKey2_TextChanged);
             // 
-            // textBox3
+            // subKey3
             // 
-            this.textBox3.Location = new System.Drawing.Point(667, 284);
-            this.textBox3.Name = "textBox3";
-            this.textBox3.Size = new System.Drawing.Size(182, 23);
-            this.textBox3.TabIndex = 38;
+            this.subKey3.Location = new System.Drawing.Point(667, 328);
+            this.subKey3.Name = "subKey3";
+            this.subKey3.Size = new System.Drawing.Size(182, 23);
+            this.subKey3.TabIndex = 38;
             // 
-            // textBox4
+            // radioButton1
             // 
-            this.textBox4.Location = new System.Drawing.Point(414, 328);
-            this.textBox4.Name = "textBox4";
-            this.textBox4.Size = new System.Drawing.Size(182, 23);
-            this.textBox4.TabIndex = 39;
+            this.radioButton1.AutoSize = true;
+            this.radioButton1.Checked = true;
+            this.radioButton1.Location = new System.Drawing.Point(287, 282);
+            this.radioButton1.Name = "radioButton1";
+            this.radioButton1.Size = new System.Drawing.Size(73, 21);
+            this.radioButton1.TabIndex = 41;
+            this.radioButton1.TabStop = true;
+            this.radioButton1.Text = "mode 1";
+            this.radioButton1.UseVisualStyleBackColor = true;
+            this.radioButton1.CheckedChanged += new System.EventHandler(this.radioButton1_CheckedChanged);
             // 
-            // Form1
+            // radioButton2
+            // 
+            this.radioButton2.AutoSize = true;
+            this.radioButton2.Location = new System.Drawing.Point(393, 282);
+            this.radioButton2.Name = "radioButton2";
+            this.radioButton2.Size = new System.Drawing.Size(77, 21);
+            this.radioButton2.TabIndex = 42;
+            this.radioButton2.TabStop = true;
+            this.radioButton2.Text = "mode 2 ";
+            this.radioButton2.UseVisualStyleBackColor = true;
+            this.radioButton2.CheckedChanged += new System.EventHandler(this.radioButton2_CheckedChanged);
+            // 
+            // radioButton3
+            // 
+            this.radioButton3.AutoSize = true;
+            this.radioButton3.Location = new System.Drawing.Point(523, 282);
+            this.radioButton3.Name = "radioButton3";
+            this.radioButton3.Size = new System.Drawing.Size(73, 21);
+            this.radioButton3.TabIndex = 43;
+            this.radioButton3.TabStop = true;
+            this.radioButton3.Text = "mode 3";
+            this.radioButton3.UseVisualStyleBackColor = true;
+            this.radioButton3.CheckedChanged += new System.EventHandler(this.radioButton3_CheckedChanged);
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(152, 282);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(125, 17);
+            this.label6.TabIndex = 45;
+            this.label6.Text = "Choose key mode:";
+            // 
+            // tripdes
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1067, 554);
-            this.Controls.Add(this.textBox4);
-            this.Controls.Add(this.textBox3);
-            this.Controls.Add(this.textBox2);
-            this.Controls.Add(this.textBox1);
+            this.Controls.Add(this.label6);
+            this.Controls.Add(this.radioButton3);
+            this.Controls.Add(this.radioButton2);
+            this.Controls.Add(this.radioButton1);
+            this.Controls.Add(this.subKey3);
+            this.Controls.Add(this.subKey2);
+            this.Controls.Add(this.subKey1);
             this.Controls.Add(this.Refresh);
             this.Controls.Add(this.getDecrypt);
             this.Controls.Add(this.getEncrypt);
@@ -254,8 +300,8 @@
             this.Controls.Add(this.inputEncrypt);
             this.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Margin = new System.Windows.Forms.Padding(4);
-            this.Name = "Form1";
-            this.Text = "Form1";
+            this.Name = "tripdes";
+            this.Text = "3DES";
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -278,10 +324,13 @@
         private System.Windows.Forms.Button getEncrypt;
         private System.Windows.Forms.Button getDecrypt;
         private System.Windows.Forms.Button Refresh;
-        private System.Windows.Forms.TextBox textBox1;
-        private System.Windows.Forms.TextBox textBox2;
-        private System.Windows.Forms.TextBox textBox3;
-        private System.Windows.Forms.TextBox textBox4;
+        private System.Windows.Forms.TextBox subKey1;
+        private System.Windows.Forms.TextBox subKey2;
+        private System.Windows.Forms.TextBox subKey3;
+        private System.Windows.Forms.RadioButton radioButton1;
+        private System.Windows.Forms.RadioButton radioButton2;
+        private System.Windows.Forms.RadioButton radioButton3;
+        private System.Windows.Forms.Label label6;
     }
 }
 

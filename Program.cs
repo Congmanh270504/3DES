@@ -16,7 +16,7 @@ namespace _3DES
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Form1());
+            Application.Run(new tripdes());
             //Application.Run(new Test_3DES());
         }
     }
