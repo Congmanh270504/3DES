@@ -39,7 +39,7 @@ namespace _3DES
         public void Encrypt()
         {
             DesEdeEngine engine = new DesEdeEngine();
-            PaddedBufferedBlockCipher paddedBufferedBlockCipher = new PaddedBufferedBlockCipher(new EcbBlockCipher(engine), new Pkcs7Padding());
+            PaddedBufferedBlockCipher ECB = new PaddedBufferedBlockCipher(new EcbBlockCipher(engine), new Pkcs7Padding());
             KeyParameter keyParameter;
             switch (currentOp)
             {
@@ -56,15 +56,13 @@ namespace _3DES
                 default:
                     throw new Exception("Loi~ ??");
             }
-
-
-            paddedBufferedBlockCipher.Init(true, keyParameter);// true = encrypt 
+            ECB.Init(true, keyParameter);// true = encrypt 
             byte[] ip = Encoding.UTF8.GetBytes(inputEncrypt.Text);
-            byte[] op = new byte[paddedBufferedBlockCipher.GetOutputSize(ip.Length)];
-            int lenght = paddedBufferedBlockCipher.ProcessBytes(ip, 0, ip.Length, op, 0);
+            byte[] op = new byte[ECB.GetOutputSize(ip.Length)];
+            int lenght = ECB.ProcessBytes(ip, 0, ip.Length, op, 0);
             try
             {
-                paddedBufferedBlockCipher.DoFinal(op, lenght);
+                ECB.DoFinal(op, lenght);
             }
             catch (CryptoException ce)
             {
@@ -72,12 +70,11 @@ namespace _3DES
             }
             resultEncrypt.Text = Convert.ToBase64String(op);
             inputDecrypt.Text = resultEncrypt.Text;
-
         }
-        public void Decrypt()
+        public void encryptCBC()
         {
             DesEdeEngine engine = new DesEdeEngine();
-            PaddedBufferedBlockCipher paddedBufferedBlockCipher = new PaddedBufferedBlockCipher(new EcbBlockCipher(engine), new Pkcs7Padding());
+            PaddedBufferedBlockCipher CBC = new PaddedBufferedBlockCipher(new CbcBlockCipher(engine), new Pkcs7Padding());
             KeyParameter keyParameter;
             switch (currentOp)
             {
@@ -94,14 +91,48 @@ namespace _3DES
                 default:
                     throw new Exception("Loi~ ??");
             }
-
-            paddedBufferedBlockCipher.Init(false, keyParameter);// false = decrypt
-            byte[] ip = Convert.FromBase64String(inputDecrypt.Text);
-            byte[] op = new byte[paddedBufferedBlockCipher.GetOutputSize(ip.Length)];
-            int lenght = paddedBufferedBlockCipher.ProcessBytes(ip, 0, ip.Length, op, 0);
+            CBC.Init(true, keyParameter);// true = encrypt 
+            byte[] ip = Encoding.UTF8.GetBytes(inputEncrypt.Text);
+            byte[] op = new byte[CBC.GetOutputSize(ip.Length)];
+            int lenght = CBC.ProcessBytes(ip, 0, ip.Length, op, 0);
             try
             {
-                paddedBufferedBlockCipher.DoFinal(op, lenght);
+                CBC.DoFinal(op, lenght);
+            }
+            catch (CryptoException ce)
+            {
+                MessageBox.Show(ce.ToString());
+            }
+            resultEncrypt.Text = Convert.ToBase64String(op);
+            inputDecrypt.Text = resultEncrypt.Text;
+        }
+        public void Decrypt()
+        {
+            DesEdeEngine engine = new DesEdeEngine();
+            PaddedBufferedBlockCipher ECB = new PaddedBufferedBlockCipher(new EcbBlockCipher(engine), new Pkcs7Padding());
+            KeyParameter keyParameter;
+            switch (currentOp)
+            {
+                case KeyOption.op1:
+                    keyParameter = new KeyParameter(Encoding.ASCII.GetBytes(subKey1.Text + subKey2.Text + subKey3.Text));
+                    break;
+                case KeyOption.op2:
+                    keyParameter = new KeyParameter(Encoding.ASCII.GetBytes(subKey1.Text + subKey2.Text + subKey1.Text));
+                    break;
+                case KeyOption.op3:
+                    keyParameter = new KeyParameter(Encoding.ASCII.GetBytes(subKey1.Text + subKey1.Text + subKey1.Text));
+                    break;
+                default:
+                    throw new Exception("Loi~ ??");
+            }
+
+            ECB.Init(false, keyParameter);// false = decrypt
+            byte[] ip = Convert.FromBase64String(inputDecrypt.Text);
+            byte[] op = new byte[ECB.GetOutputSize(ip.Length)];
+            int lenght = ECB.ProcessBytes(ip, 0, ip.Length, op, 0);
+            try
+            {
+                ECB.DoFinal(op, lenght);
             }
             catch (CryptoException ce)
             {
@@ -109,6 +140,7 @@ namespace _3DES
             }
             resultDecrypt.Text = Encoding.UTF8.GetString(op);
         }
+
         private static Random random = new Random();
 
         public static string RandomString(int length)
@@ -171,10 +203,11 @@ namespace _3DES
 
         private void Encrypt_Click(object sender, EventArgs e)
         {
-            ////Encrypt.ForeColor= Color.Blue;
-            //resultEncrypt.Text = Encrypt(inputEncrypt.Text, yourKey.Text);
-           
             Encrypt();
+        }
+        private void Decrypt_Click(object sender, EventArgs e)
+        {
+            Decrypt();
         }
 
         private void Refresh_Click(object sender, EventArgs e)
@@ -188,13 +221,6 @@ namespace _3DES
             subKey2.Text = "";
             subKey3.Text = "";
         }
-
-        //private void button2_Click(object sender, EventArgs e)
-        //{
-        //    Test_3DES test_3DES = new Test_3DES();
-        //    test_3DES.Show();
-        //}
-
         private void radioButton1_CheckedChanged(object sender, EventArgs e)
         {
             if (currentOp != KeyOption.op1)
@@ -222,6 +248,13 @@ namespace _3DES
                 subKey3.Text = "";
             }
         }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            //tdes.IV=
+            encryptCBC();
+        }
+
         private void radioButton3_CheckedChanged(object sender, EventArgs e)
         {
             if (currentOp != KeyOption.op3)
@@ -237,19 +270,11 @@ namespace _3DES
         }
 
 
-        private void subKey2_TextChanged(object sender, EventArgs e)
-        {
-
-        }
+       
 
 
 
-        private void Decrypt_Click(object sender, EventArgs e)
-        {
-            //Decrypt().ForeColor = Color.Blue;
-            //resultDecrypt.Text = Decrypt(resultEncrypt.Text, yourKey.Text);
-            Decrypt();
-        }
+        
 
 
     }
