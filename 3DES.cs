@@ -20,9 +20,6 @@ namespace _3DES
 {
     public partial class tripdes : Form
     {
-        SymmetricAlgorithm tdes;
-        int _blocksize = 64, _keysize = 192;
-
         enum KeyOption
         {
             op1,
@@ -30,7 +27,11 @@ namespace _3DES
             op3
         }
         KeyOption currentOp = KeyOption.op1;
-
+        enum Mode
+        {
+            ECB, CBC, CFB, OFB, CTR
+        }
+        Mode mode = Mode.ECB;
 
         public tripdes()
         {
@@ -39,7 +40,28 @@ namespace _3DES
         public void Encrypt()
         {
             DesEdeEngine engine = new DesEdeEngine();
-            PaddedBufferedBlockCipher ECB = new PaddedBufferedBlockCipher(new EcbBlockCipher(engine), new Pkcs7Padding());
+            PaddedBufferedBlockCipher cipher;
+            switch (mode)
+            {
+                case Mode.ECB:
+                    cipher = new PaddedBufferedBlockCipher(new EcbBlockCipher(engine), new Pkcs7Padding());
+                    break;
+                case Mode.CBC:
+                    cipher = new PaddedBufferedBlockCipher(new CbcBlockCipher(engine), new Pkcs7Padding());
+                    break;
+                case Mode.CFB:
+                    cipher = new PaddedBufferedBlockCipher(new CfbBlockCipher(engine, 8), new Pkcs7Padding());
+                    break;
+                case Mode.OFB:
+                    cipher = new PaddedBufferedBlockCipher(new OfbBlockCipher(engine, 8), new Pkcs7Padding());
+                    break;
+                case Mode.CTR:
+                    cipher = new PaddedBufferedBlockCipher(new SicBlockCipher(engine), new Pkcs7Padding());
+                    break;
+                default:
+                    throw new Exception("Loi~ ??");
+
+            }
             KeyParameter keyParameter;
             switch (currentOp)
             {
@@ -56,48 +78,21 @@ namespace _3DES
                 default:
                     throw new Exception("Loi~ ??");
             }
-            ECB.Init(true, keyParameter);// true = encrypt 
+            if (mode == Mode.ECB)
+            {
+                cipher.Init(true, keyParameter);// true = encrypt 
+            }
+            else
+            {
+                ParametersWithIV parametersWithIV = new ParametersWithIV(keyParameter, Encoding.ASCII.GetBytes(yourIV.Text));
+                cipher.Init(true, parametersWithIV);// true = encrypt 
+            }
             byte[] ip = Encoding.UTF8.GetBytes(inputEncrypt.Text);
-            byte[] op = new byte[ECB.GetOutputSize(ip.Length)];
-            int lenght = ECB.ProcessBytes(ip, 0, ip.Length, op, 0);
+            byte[] op = new byte[cipher.GetOutputSize(ip.Length)];
+            int lenght = cipher.ProcessBytes(ip, 0, ip.Length, op, 0);
             try
             {
-                ECB.DoFinal(op, lenght);
-            }
-            catch (CryptoException ce)
-            {
-                MessageBox.Show(ce.ToString());
-            }
-            resultEncrypt.Text = Convert.ToBase64String(op);
-            inputDecrypt.Text = resultEncrypt.Text;
-        }
-        public void encryptCBC()
-        {
-            DesEdeEngine engine = new DesEdeEngine();
-            PaddedBufferedBlockCipher CBC = new PaddedBufferedBlockCipher(new CbcBlockCipher(engine), new Pkcs7Padding());
-            KeyParameter keyParameter;
-            switch (currentOp)
-            {
-                case KeyOption.op1:
-                    keyParameter = new KeyParameter(Encoding.ASCII.GetBytes(subKey1.Text + subKey2.Text + subKey3.Text));
-                    break;
-                case KeyOption.op2:
-                    keyParameter = new KeyParameter(Encoding.ASCII.GetBytes(subKey1.Text + subKey2.Text + subKey1.Text));
-
-                    break;
-                case KeyOption.op3:
-                    keyParameter = new KeyParameter(Encoding.ASCII.GetBytes(subKey1.Text + subKey1.Text + subKey1.Text));
-                    break;
-                default:
-                    throw new Exception("Loi~ ??");
-            }
-            CBC.Init(true, keyParameter);// true = encrypt 
-            byte[] ip = Encoding.UTF8.GetBytes(inputEncrypt.Text);
-            byte[] op = new byte[CBC.GetOutputSize(ip.Length)];
-            int lenght = CBC.ProcessBytes(ip, 0, ip.Length, op, 0);
-            try
-            {
-                CBC.DoFinal(op, lenght);
+                cipher.DoFinal(op, lenght);
             }
             catch (CryptoException ce)
             {
@@ -109,7 +104,28 @@ namespace _3DES
         public void Decrypt()
         {
             DesEdeEngine engine = new DesEdeEngine();
-            PaddedBufferedBlockCipher ECB = new PaddedBufferedBlockCipher(new EcbBlockCipher(engine), new Pkcs7Padding());
+            PaddedBufferedBlockCipher cipher;
+            switch (mode)
+            {
+                case Mode.ECB:
+                    cipher = new PaddedBufferedBlockCipher(new EcbBlockCipher(engine), new Pkcs7Padding());
+                    break;
+                case Mode.CBC:
+                    cipher = new PaddedBufferedBlockCipher(new CbcBlockCipher(engine), new Pkcs7Padding());
+                    break;
+                case Mode.CFB:
+                    cipher = new PaddedBufferedBlockCipher(new CfbBlockCipher(engine, 8), new Pkcs7Padding());
+                    break;
+                case Mode.OFB:
+                    cipher = new PaddedBufferedBlockCipher(new OfbBlockCipher(engine, 8), new Pkcs7Padding());
+                    break;
+                case Mode.CTR:
+                    cipher = new PaddedBufferedBlockCipher(new SicBlockCipher(engine), new Pkcs7Padding());
+                    break;
+                default:
+                    throw new Exception("Loi~ ??");
+
+            }
             KeyParameter keyParameter;
             switch (currentOp)
             {
@@ -125,14 +141,22 @@ namespace _3DES
                 default:
                     throw new Exception("Loi~ ??");
             }
+            if (mode == Mode.ECB)
+            {
+                cipher.Init(false, keyParameter);// false = decrypt 
+            }
+            else
+            {
+                ParametersWithIV parametersWithIV = new ParametersWithIV(keyParameter, Encoding.ASCII.GetBytes(yourIV.Text));
+                cipher.Init(false, parametersWithIV);// false = decrypt 
+            }
 
-            ECB.Init(false, keyParameter);// false = decrypt
             byte[] ip = Convert.FromBase64String(inputDecrypt.Text);
-            byte[] op = new byte[ECB.GetOutputSize(ip.Length)];
-            int lenght = ECB.ProcessBytes(ip, 0, ip.Length, op, 0);
+            byte[] op = new byte[cipher.GetOutputSize(ip.Length)];
+            int lenght = cipher.ProcessBytes(ip, 0, ip.Length, op, 0);
             try
             {
-                ECB.DoFinal(op, lenght);
+                cipher.DoFinal(op, lenght);
             }
             catch (CryptoException ce)
             {
@@ -152,6 +176,7 @@ namespace _3DES
 
         private void getKey_Click(object sender, EventArgs e)
         {
+
             switch (currentOp)
             {
                 case KeyOption.op1:
@@ -220,6 +245,12 @@ namespace _3DES
             subKey1.Text = "";
             subKey2.Text = "";
             subKey3.Text = "";
+            yourIV.Text = "";
+            radioButton1.Checked = true;
+            radioECB.Checked = true;
+            label7.Visible = false;
+            yourIV.Visible = false;
+            getIV.Visible = false;
         }
         private void radioButton1_CheckedChanged(object sender, EventArgs e)
         {
@@ -248,13 +279,6 @@ namespace _3DES
                 subKey3.Text = "";
             }
         }
-
-        private void button1_Click(object sender, EventArgs e)
-        {
-            //tdes.IV=
-            encryptCBC();
-        }
-
         private void radioButton3_CheckedChanged(object sender, EventArgs e)
         {
             if (currentOp != KeyOption.op3)
@@ -269,13 +293,173 @@ namespace _3DES
             }
         }
 
+        private void radioECB_CheckedChanged(object sender, EventArgs e)
+        {
+            if (mode != Mode.ECB)
+            {
+                label7.Visible = false;
+                yourIV.Visible = false;
+                getIV.Visible = false;
+                mode = Mode.ECB;
+                yourIV.Text = "";
+            }
+
+        }
+
+        private void radioCBC_CheckedChanged(object sender, EventArgs e)
+        {
+            if (mode != Mode.CBC)
+            {
+                label7.Visible = true;
+                yourIV.Visible = true;
+                getIV.Visible = true;
+                mode = Mode.CBC;
+                yourIV.Text = "";
+            }
+        }
+
+        private void radioCFB_CheckedChanged(object sender, EventArgs e)
+        {
+            if (mode != Mode.CFB)
+            {
+                label7.Visible = true;
+                yourIV.Visible = true;
+                getIV.Visible = true;
+                mode = Mode.CFB;
+                yourIV.Text = "";
+            }
+        }
+        private void radioOFB_CheckedChanged(object sender, EventArgs e)
+        {
+            if (mode != Mode.OFB)
+            {
+                label7.Visible = true;
+                yourIV.Visible = true;
+                getIV.Visible = true;
+                mode = Mode.OFB;
+                yourIV.Text = "";
+            }
+        }
+        private void radioCTR_CheckedChanged(object sender, EventArgs e)
+        {
+            if (mode != Mode.CTR)
+            {
+                label7.Visible = true;
+                yourIV.Visible = true;
+                getIV.Visible = true;
+                mode = Mode.CTR;
+                yourIV.Text = "";
+            }
+        }
+        private void getIV_Click(object sender, EventArgs e)
+        {
+            if (mode == Mode.ECB)
+            {
+                throw new Exception("Loi~ ??");
+            }
+            else
+            {
+                yourIV.Text = RandomString(8);
+            }
+
+        }
+
+        private void yourKey_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode != Keys.Enter)
+            {
+                return;
+            }
+            switch (currentOp)
+            {
+                case KeyOption.op1:
+                    if (yourKey.Text.Length != 24)
+                    {
+                        MessageBox.Show("Wrong key size must be 24 character!!");
+                    }
+                    else
+                    {
+                        subKey1.Text = yourKey.Text.Substring(0, 8);
+                        subKey2.Text = yourKey.Text.Substring(8, 8);
+                        subKey3.Text = yourKey.Text.Substring(16, 8);
+                    }
+                    break;
+                case KeyOption.op2:
+                    if (yourKey.Text.Length != 16)
+                    {
+                        MessageBox.Show("Wrong key size must be 16 character!!");
+                    }
+                    else
+                    {
+                        subKey1.Text = yourKey.Text.Substring(0, 8);
+                        subKey2.Text = yourKey.Text.Substring(8, 8);
+                    }
+                    break;
+                case KeyOption.op3:
+                    if (yourKey.Text.Length != 8)
+                    {
+                        MessageBox.Show("Wrong key size must be 8 character!!");
+                    }
+                    else
+                    {
+                        subKey1.Text = yourKey.Text.Substring(0, 8);
+                    }
+                    break;
+                default:
+                    throw new Exception("Loi~ ??");
+            }
+        }
+
+        private void tripdes_Load(object sender, EventArgs e)
+        {
+            label7.Visible = false;
+            yourIV.Visible = false;
+            getIV.Visible = false;
+        }
+
+        private void inputEncrypt_gotFocus(object sender, EventArgs e)
+        {
+            if (inputEncrypt.Text == "Enter plain text to hash")
+            {
+                inputEncrypt.Text = "";
+            }
+        }
+        private void inputEncrypt_lostFocus(object sender, EventArgs e)
+        {
+            if (inputEncrypt.Text == "")
+            {
+                inputEncrypt.Text = "Enter plain text to hash";
+            }
+        }
+        private void inputDecrypt_gotFocus(object sender, EventArgs e)
+        {
+            if (inputDecrypt.Text == "Enter text to Decrypt")
+            {
+                inputDecrypt.Text = "";
+            }
+        }
+        private void inputDecrypt_lostFocus(object sender, EventArgs e)
+        {
+            if (inputDecrypt.Text == "")
+            {
+                inputDecrypt.Text = "Enter text to Decrypt";
+            }
+        }
+        private void yourKey_gotFocus(object sender, EventArgs e)
+        {
+            if (yourKey.Text == "Enter Key")
+            {
+                yourKey.Text = "";
+            }
+        }
+        private void yourKey_lostFocus(object sender, EventArgs e)
+        {
+            if (yourKey.Text == "")
+            {
+                yourKey.Text = "Enter Key";
+            }
+        }
 
        
-
-
-
-        
-
-
     }
 }

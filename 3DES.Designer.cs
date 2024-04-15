@@ -51,11 +51,16 @@
             this.radioButton2 = new System.Windows.Forms.RadioButton();
             this.radioButton3 = new System.Windows.Forms.RadioButton();
             this.label6 = new System.Windows.Forms.Label();
-            this.label5 = new System.Windows.Forms.Label();
-            this.radioButton4 = new System.Windows.Forms.RadioButton();
-            this.radioButton5 = new System.Windows.Forms.RadioButton();
-            this.radioButton6 = new System.Windows.Forms.RadioButton();
-            this.button1 = new System.Windows.Forms.Button();
+            this.radioCFB = new System.Windows.Forms.RadioButton();
+            this.radioCBC = new System.Windows.Forms.RadioButton();
+            this.radioECB = new System.Windows.Forms.RadioButton();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.radioCTR = new System.Windows.Forms.RadioButton();
+            this.radioOFB = new System.Windows.Forms.RadioButton();
+            this.label7 = new System.Windows.Forms.Label();
+            this.yourIV = new System.Windows.Forms.TextBox();
+            this.getIV = new System.Windows.Forms.Button();
+            this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
             // inputEncrypt
@@ -65,6 +70,9 @@
             this.inputEncrypt.Name = "inputEncrypt";
             this.inputEncrypt.Size = new System.Drawing.Size(182, 23);
             this.inputEncrypt.TabIndex = 2;
+            this.inputEncrypt.Text = "Enter plain text to hash";
+            this.inputEncrypt.GotFocus += new System.EventHandler(this.inputEncrypt_gotFocus);
+            this.inputEncrypt.LostFocus += new System.EventHandler(this.inputEncrypt_lostFocus);
             // 
             // getKey
             // 
@@ -124,7 +132,11 @@
             this.yourKey.Margin = new System.Windows.Forms.Padding(4);
             this.yourKey.Name = "yourKey";
             this.yourKey.Size = new System.Drawing.Size(207, 23);
-            this.yourKey.TabIndex = 11;
+            this.yourKey.TabIndex = 1;
+            this.yourKey.Text = "Enter Key";
+            this.yourKey.GotFocus += new System.EventHandler(this.yourKey_gotFocus);
+            this.yourKey.KeyDown += new System.Windows.Forms.KeyEventHandler(this.yourKey_KeyDown);
+            this.yourKey.LostFocus += new System.EventHandler(this.yourKey_lostFocus);
             // 
             // label9
             // 
@@ -148,6 +160,9 @@
             this.inputDecrypt.Name = "inputDecrypt";
             this.inputDecrypt.Size = new System.Drawing.Size(202, 23);
             this.inputDecrypt.TabIndex = 20;
+            this.inputDecrypt.Text = "Enter text to Decrypt";
+            this.inputDecrypt.GotFocus += new System.EventHandler(this.inputDecrypt_gotFocus);
+            this.inputDecrypt.LostFocus += new System.EventHandler(this.inputDecrypt_lostFocus);
             // 
             // label14
             // 
@@ -170,9 +185,9 @@
             this.label16.AutoSize = true;
             this.label16.Location = new System.Drawing.Point(796, 9);
             this.label16.Name = "label16";
-            this.label16.Size = new System.Drawing.Size(66, 17);
+            this.label16.Size = new System.Drawing.Size(70, 17);
             this.label16.TabIndex = 31;
-            this.label16.Text = "YourKey:";
+            this.label16.Text = "Your Key:";
             // 
             // getEncrypt
             // 
@@ -199,7 +214,7 @@
             // Refresh
             // 
             this.Refresh.BackColor = System.Drawing.SystemColors.ActiveCaption;
-            this.Refresh.Location = new System.Drawing.Point(961, 408);
+            this.Refresh.Location = new System.Drawing.Point(537, 404);
             this.Refresh.Name = "Refresh";
             this.Refresh.Size = new System.Drawing.Size(90, 37);
             this.Refresh.TabIndex = 35;
@@ -274,69 +289,118 @@
             this.label6.TabIndex = 45;
             this.label6.Text = "Choose key mode:";
             // 
-            // label5
+            // radioCFB
             // 
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(797, 148);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(95, 17);
-            this.label5.TabIndex = 49;
-            this.label5.Text = "Choose mode";
+            this.radioCFB.AutoSize = true;
+            this.radioCFB.Location = new System.Drawing.Point(175, 45);
+            this.radioCFB.Name = "radioCFB";
+            this.radioCFB.Size = new System.Drawing.Size(52, 21);
+            this.radioCFB.TabIndex = 48;
+            this.radioCFB.TabStop = true;
+            this.radioCFB.Text = "CFB";
+            this.radioCFB.UseVisualStyleBackColor = true;
+            this.radioCFB.CheckedChanged += new System.EventHandler(this.radioCFB_CheckedChanged);
             // 
-            // radioButton4
+            // radioCBC
             // 
-            this.radioButton4.AutoSize = true;
-            this.radioButton4.Location = new System.Drawing.Point(991, 176);
-            this.radioButton4.Name = "radioButton4";
-            this.radioButton4.Size = new System.Drawing.Size(60, 21);
-            this.radioButton4.TabIndex = 48;
-            this.radioButton4.TabStop = true;
-            this.radioButton4.Text = "1 key";
-            this.radioButton4.UseVisualStyleBackColor = true;
+            this.radioCBC.AutoSize = true;
+            this.radioCBC.Location = new System.Drawing.Point(90, 45);
+            this.radioCBC.Name = "radioCBC";
+            this.radioCBC.Size = new System.Drawing.Size(53, 21);
+            this.radioCBC.TabIndex = 47;
+            this.radioCBC.TabStop = true;
+            this.radioCBC.Text = "CBC";
+            this.radioCBC.UseVisualStyleBackColor = true;
+            this.radioCBC.CheckedChanged += new System.EventHandler(this.radioCBC_CheckedChanged);
             // 
-            // radioButton5
+            // radioECB
             // 
-            this.radioButton5.AutoSize = true;
-            this.radioButton5.Location = new System.Drawing.Point(882, 176);
-            this.radioButton5.Name = "radioButton5";
-            this.radioButton5.Size = new System.Drawing.Size(53, 21);
-            this.radioButton5.TabIndex = 47;
-            this.radioButton5.TabStop = true;
-            this.radioButton5.Text = "CBC";
-            this.radioButton5.UseVisualStyleBackColor = true;
+            this.radioECB.AutoSize = true;
+            this.radioECB.Checked = true;
+            this.radioECB.Location = new System.Drawing.Point(6, 45);
+            this.radioECB.Name = "radioECB";
+            this.radioECB.Size = new System.Drawing.Size(53, 21);
+            this.radioECB.TabIndex = 46;
+            this.radioECB.TabStop = true;
+            this.radioECB.Text = "ECB";
+            this.radioECB.UseVisualStyleBackColor = true;
+            this.radioECB.CheckedChanged += new System.EventHandler(this.radioECB_CheckedChanged);
             // 
-            // radioButton6
+            // groupBox1
             // 
-            this.radioButton6.AutoSize = true;
-            this.radioButton6.Checked = true;
-            this.radioButton6.Location = new System.Drawing.Point(800, 176);
-            this.radioButton6.Name = "radioButton6";
-            this.radioButton6.Size = new System.Drawing.Size(53, 21);
-            this.radioButton6.TabIndex = 46;
-            this.radioButton6.TabStop = true;
-            this.radioButton6.Text = "ECB";
-            this.radioButton6.UseVisualStyleBackColor = true;
+            this.groupBox1.Controls.Add(this.radioCTR);
+            this.groupBox1.Controls.Add(this.radioOFB);
+            this.groupBox1.Controls.Add(this.radioECB);
+            this.groupBox1.Controls.Add(this.radioCFB);
+            this.groupBox1.Controls.Add(this.radioCBC);
+            this.groupBox1.Location = new System.Drawing.Point(799, 131);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(379, 100);
+            this.groupBox1.TabIndex = 51;
+            this.groupBox1.TabStop = false;
+            this.groupBox1.Text = "Choose mode";
             // 
-            // button1
+            // radioCTR
             // 
-            this.button1.Location = new System.Drawing.Point(616, 403);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 23);
-            this.button1.TabIndex = 50;
-            this.button1.Text = "button1";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
+            this.radioCTR.AutoSize = true;
+            this.radioCTR.Location = new System.Drawing.Point(319, 45);
+            this.radioCTR.Name = "radioCTR";
+            this.radioCTR.Size = new System.Drawing.Size(54, 21);
+            this.radioCTR.TabIndex = 50;
+            this.radioCTR.TabStop = true;
+            this.radioCTR.Text = "CTR";
+            this.radioCTR.UseVisualStyleBackColor = true;
+            this.radioCTR.CheckedChanged += new System.EventHandler(this.radioCTR_CheckedChanged);
+            // 
+            // radioOFB
+            // 
+            this.radioOFB.AutoSize = true;
+            this.radioOFB.Location = new System.Drawing.Point(249, 45);
+            this.radioOFB.Name = "radioOFB";
+            this.radioOFB.Size = new System.Drawing.Size(54, 21);
+            this.radioOFB.TabIndex = 49;
+            this.radioOFB.TabStop = true;
+            this.radioOFB.Text = "OFB";
+            this.radioOFB.UseVisualStyleBackColor = true;
+            this.radioOFB.CheckedChanged += new System.EventHandler(this.radioOFB_CheckedChanged);
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(796, 274);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(58, 17);
+            this.label7.TabIndex = 55;
+            this.label7.Text = "Your IV:";
+            // 
+            // yourIV
+            // 
+            this.yourIV.Location = new System.Drawing.Point(799, 314);
+            this.yourIV.Margin = new System.Windows.Forms.Padding(4);
+            this.yourIV.Name = "yourIV";
+            this.yourIV.Size = new System.Drawing.Size(207, 23);
+            this.yourIV.TabIndex = 54;
+            // 
+            // getIV
+            // 
+            this.getIV.BackColor = System.Drawing.SystemColors.ActiveCaption;
+            this.getIV.Location = new System.Drawing.Point(1028, 311);
+            this.getIV.Margin = new System.Windows.Forms.Padding(4);
+            this.getIV.Name = "getIV";
+            this.getIV.Size = new System.Drawing.Size(87, 28);
+            this.getIV.TabIndex = 53;
+            this.getIV.Text = "Get IV";
+            this.getIV.UseVisualStyleBackColor = false;
+            this.getIV.Click += new System.EventHandler(this.getIV_Click);
             // 
             // tripdes
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1107, 582);
-            this.Controls.Add(this.button1);
-            this.Controls.Add(this.label5);
-            this.Controls.Add(this.radioButton4);
-            this.Controls.Add(this.radioButton5);
-            this.Controls.Add(this.radioButton6);
+            this.ClientSize = new System.Drawing.Size(1190, 582);
+            this.Controls.Add(this.label7);
+            this.Controls.Add(this.yourIV);
+            this.Controls.Add(this.getIV);
             this.Controls.Add(this.label6);
             this.Controls.Add(this.radioButton3);
             this.Controls.Add(this.radioButton2);
@@ -360,10 +424,14 @@
             this.Controls.Add(this.label1);
             this.Controls.Add(this.getKey);
             this.Controls.Add(this.inputEncrypt);
+            this.Controls.Add(this.groupBox1);
             this.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "tripdes";
             this.Text = "3DES";
+            this.Load += new System.EventHandler(this.tripdes_Load);
+            this.groupBox1.ResumeLayout(false);
+            this.groupBox1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -393,11 +461,15 @@
         private System.Windows.Forms.RadioButton radioButton2;
         private System.Windows.Forms.RadioButton radioButton3;
         private System.Windows.Forms.Label label6;
-        private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.RadioButton radioButton4;
-        private System.Windows.Forms.RadioButton radioButton5;
-        private System.Windows.Forms.RadioButton radioButton6;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.RadioButton radioCFB;
+        private System.Windows.Forms.RadioButton radioCBC;
+        private System.Windows.Forms.RadioButton radioECB;
+        private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.TextBox yourIV;
+        private System.Windows.Forms.Button getIV;
+        private System.Windows.Forms.RadioButton radioOFB;
+        private System.Windows.Forms.RadioButton radioCTR;
     }
 }
 
